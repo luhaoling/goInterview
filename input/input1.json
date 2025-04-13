@@ -1,0 +1,7 @@
+[
+  {"zone": "gz", "bizid": "26", "env": "test",  "__value__": 10},
+  {"zone": "gz", "bizid": "26", "env": "test",  "__value__": 20},
+  {"zone": "gz", "bizid": "26", "env": "test",  "__value__": 30},
+  {"zone": "sz", "bizid": "26", "env": "test",   "__value__": 15},
+  {"zone": "sz", "bizid": "26", "env": "test",   "__value__": 25}
+]

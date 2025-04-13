@@ -1,0 +1,52 @@
+pipeline:
+  batchSize: 100          # 批处理大小
+  worker:  2               #cpu 核心数
+
+receiver:
+  type: 1               # 1 文件，2 网络
+  path: # 输入路径列表
+    - "input/input1.json"
+    - "input/input2.json"
+    - "input/input3.json"
+    - "input/input4.json"
+    - "input/input5.json"
+  chanSize: 100         # 数据传输通道大小
+
+processor:
+  filterConfig:            # 过滤器配置
+    field: "env"          # 过滤字段
+    values:                # 允许的值列表
+      - "prod"
+      - "dev"
+    open: true             # 是否启用该处理器，true 启用
+
+  fillConfig:              # 填充配置
+    field:                 # 需要填充的字段
+      - "os_type"
+      - "os_version"
+    open: true           # 是否启用该处理器，true 启用
+
+  aggregatorConfig:        # 聚合器配置
+    groupByFields:         # 分组字段
+      - "zone"
+      - "bizid"
+      - "env"
+      - "os_type"
+      - "os_version"
+    valueField: "__value__"   # 聚合值字段
+    interval: 1             # 聚合间隔(单位 second)
+    fields:                 # 统计数值
+      - "sum"
+      - "count"
+      - "min"
+      - "max"
+
+backend:
+  path: "output.json"   # 文件输出路径
+  type: 1               # 1 文件，2 数据库
+  dns:  "root:20010214@tcp(127.0.0.1:3306)/db?charset=utf8mb4&parseTime=True"
+  batchSize: 100        # 每批次处理数量
+  flushInterval: 1      # 每批次间隔时间
+  bufferSize: 65535     # 缓冲区大小
+
+
